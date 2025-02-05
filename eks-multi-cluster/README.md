@@ -88,42 +88,39 @@ update_kubeconfigs = [
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.70.0 |
-| <a name="provider_helm"></a> [helm](#provider\_helm) | n/a |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_eks"></a> [eks](#module\_eks) | terraform-aws-modules/eks/aws | n/a |
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | n/a |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | 5.8.1 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [aws_vpc_peering_connection.vpc_peering](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_peering_connection) | resource |
-| [aws_vpc_peering_connection_accepter.peer_accepter](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_peering_connection_accepter) | resource |
-| [helm_release.gloo_platform](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
-| [helm_release.gloo_platform_crds](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
+| [aws_iam_role.cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy_attachment.cluster_eks_block_storage_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.cluster_eks_cluster_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.cluster_eks_compute_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.cluster_eks_load_balancing_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.cluster_eks_networking_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_security_group.cluster_sg](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 | [aws_availability_zones.available](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/availability_zones) | data source |
-| [aws_eks_cluster.mgmt](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster) | data source |
-| [aws_eks_cluster_auth.mgmt](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster_auth) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_created_by_tag"></a> [created\_by\_tag](#input\_created\_by\_tag) | The value for the created-by tag | `string` | n/a | yes |
-| <a name="input_eks_node_group_size"></a> [eks\_node\_group\_size](#input\_eks\_node\_group\_size) | The number of nodes in the EKS Node Group (used for min, max, and desired sizes) | `number` | n/a | yes |
-| <a name="input_eks_node_type"></a> [eks\_node\_type](#input\_eks\_node\_type) | The EC2 instance types for the EKS Node Groups | `string` | n/a | yes |
-| <a name="input_gloo_management_cluster_name"></a> [gloo\_management\_cluster\_name](#input\_gloo\_management\_cluster\_name) | The name of the management cluster | `string` | `"mgmt"` | no |
-| <a name="input_gloo_mesh_license_key"></a> [gloo\_mesh\_license\_key](#input\_gloo\_mesh\_license\_key) | The license key for Gloo Mesh Enterprise | `string` | n/a | yes |
-| <a name="input_gloo_mesh_version"></a> [gloo\_mesh\_version](#input\_gloo\_mesh\_version) | The version of Gloo Mesh Enterprise to install | `string` | n/a | yes |
-| <a name="input_kubernetes_version"></a> [kubernetes\_version](#input\_kubernetes\_version) | The Kubernetes version for the EKS cluster | `string` | n/a | yes |
-| <a name="input_region"></a> [region](#input\_region) | The AWS region to use | `string` | n/a | yes |
-| <a name="input_resource_prefix"></a> [resource\_prefix](#input\_resource\_prefix) | The prefix to use for all resources | `string` | n/a | yes |
-| <a name="input_team_tag"></a> [team\_tag](#input\_team\_tag) | The value for the team tag | `string` | n/a | yes |
-| <a name="input_vpcs"></a> [vpcs](#input\_vpcs) | The VPCs to create | <pre>list(object({<br/>    region          = string<br/>    cidr_block      = string<br/>    public_subnets  = list(string)<br/>    private_subnets = list(string)<br/>  }))</pre> | n/a | yes |
+| <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | n/a | `string` | n/a | yes |
+| <a name="input_created_by_tag"></a> [created\_by\_tag](#input\_created\_by\_tag) | n/a | `string` | n/a | yes |
+| <a name="input_eks_node_group_size"></a> [eks\_node\_group\_size](#input\_eks\_node\_group\_size) | n/a | `number` | n/a | yes |
+| <a name="input_eks_node_type"></a> [eks\_node\_type](#input\_eks\_node\_type) | n/a | `string` | n/a | yes |
+| <a name="input_kubernetes_version"></a> [kubernetes\_version](#input\_kubernetes\_version) | n/a | `string` | n/a | yes |
+| <a name="input_resource_prefix"></a> [resource\_prefix](#input\_resource\_prefix) | n/a | `string` | n/a | yes |
+| <a name="input_team_tag"></a> [team\_tag](#input\_team\_tag) | n/a | `string` | n/a | yes |
+| <a name="input_vpcs"></a> [vpcs](#input\_vpcs) | n/a | <pre>list(object({<br/>    name            = string<br/>    region          = string<br/>    cidr_block      = string<br/>    public_subnets  = list(string)<br/>    private_subnets = list(string)<br/>  }))</pre> | n/a | yes |
 
 ## Outputs
 

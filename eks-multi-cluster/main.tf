@@ -67,12 +67,7 @@ module "eks" {
   count  = length(var.vpcs)
   source = "terraform-aws-modules/eks/aws"
   depends_on = [
-    module.vpc,
-    aws_iam_role_policy_attachment.cluster_eks_block_storage_policy,
-    aws_iam_role_policy_attachment.cluster_eks_cluster_policy,
-    aws_iam_role_policy_attachment.cluster_eks_compute_policy,
-    aws_iam_role_policy_attachment.cluster_eks_load_balancing_policy,
-    aws_iam_role_policy_attachment.cluster_eks_networking_policy
+    module.vpc
   ]
   cluster_endpoint_public_access           = true
   cluster_name                             = "${var.resource_prefix}-${var.vpcs[count.index].name}-cluster"
@@ -92,46 +87,4 @@ module "eks" {
   }
   subnet_ids = module.vpc[count.index].public_subnets
   vpc_id     = module.vpc[count.index].vpc_id
-}
-
-# EKS cluster permissions
-resource "aws_iam_role" "cluster" {
-  name = "eks-cluster"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = [
-          "sts:AssumeRole",
-          "sts:TagSession"
-        ]
-        Effect = "Allow"
-        Principal = {
-          Service = "eks.amazonaws.com"
-        }
-      },
-    ]
-  })
-}
-
-# EKS cluster policy attachments
-resource "aws_iam_role_policy_attachment" "cluster_eks_cluster_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.cluster.name
-}
-resource "aws_iam_role_policy_attachment" "cluster_eks_compute_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSComputePolicy"
-  role       = aws_iam_role.cluster.name
-}
-resource "aws_iam_role_policy_attachment" "cluster_eks_block_storage_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSBlockStoragePolicy"
-  role       = aws_iam_role.cluster.name
-}
-resource "aws_iam_role_policy_attachment" "cluster_eks_load_balancing_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSLoadBalancingPolicy"
-  role       = aws_iam_role.cluster.name
-}
-resource "aws_iam_role_policy_attachment" "cluster_eks_networking_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSNetworkingPolicy"
-  role       = aws_iam_role.cluster.name
 }

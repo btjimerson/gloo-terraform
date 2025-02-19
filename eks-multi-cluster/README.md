@@ -23,30 +23,39 @@ The easiest way to set the required variables is to use `terraform-docs`
 terraform-docs tfvars hcl . > myvars.auto.tfvars
 ```
 
-For the `vpcs`, here is an example format:
+Here is an example of the variables:
 
 ```
-vpcs = [{
-    name = "mgmt-vpc"
-  region          = "us-east-2"
-  cidr_block      = "10.0.0.0/20",
-  public_subnets  = ["10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24"],
-  private_subnets = ["10.0.3.0/24", "10.0.4.0/24", "10.0.5.0/24"]
-  },
-{
-    name = "cluster1-vpc"
-  region          = "us-east-2"
-  cidr_block      = "10.0.16.0/20",
-  public_subnets  = ["10.0.16.0/24", "10.0.17.0/24", "10.0.18.0/24"],
-  private_subnets = ["10.0.19.0/24", "10.0.20.0/24", "10.0.21.0/24"]
-  },
-{
-    name = "cluster2-vpc"
-  region          = "us-east-2"
-  cidr_block      = "10.0.32.0/20",
-  public_subnets  = ["10.0.32.0/24", "10.0.33.0/24", "10.0.34.0/24"],
-  private_subnets = ["10.0.35.0/24", "10.0.36.0/24", "10.0.37.0/24"]
-  }]
+aws_region          = "us-east-2"
+created_by_tag      = "my_name"
+eks_node_group_size = "3"
+eks_node_type       = "m5.large"
+kubernetes_version  = "1.32"
+resource_prefix     = "my-name-test"
+team_tag            = "field_engineering"
+vpcs                = [
+    {
+        name = "mgmt-vpc"
+        region          = "us-east-2"
+        cidr_block      = "10.0.0.0/20",
+        public_subnets  = ["10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24"],
+        private_subnets = ["10.0.3.0/24", "10.0.4.0/24", "10.0.5.0/24"]
+    },
+    {
+        name = "c1-vpc"
+        region          = "us-east-2"
+        cidr_block      = "10.0.16.0/20",
+        public_subnets  = ["10.0.16.0/24", "10.0.17.0/24", "10.0.18.0/24"],
+        private_subnets = ["10.0.19.0/24", "10.0.20.0/24", "10.0.21.0/24"]
+    },
+    {
+        name = "c2-vpc"
+        region          = "us-east-2"
+        cidr_block      = "10.0.32.0/20",
+        public_subnets  = ["10.0.32.0/24", "10.0.33.0/24", "10.0.34.0/24"],
+        private_subnets = ["10.0.35.0/24", "10.0.36.0/24", "10.0.37.0/24"]
+    },
+]
 ```
 
 ## Installation

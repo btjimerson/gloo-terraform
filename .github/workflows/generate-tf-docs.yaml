@@ -1,0 +1,37 @@
+name: Generate terraform docs
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  eks-terraform-docs:
+    name: Generate Terraform docs for EKS clusters
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, 'terraform-docs') }}
+    steps:
+    - name: Checkout latest commit
+      uses: actions/checkout@v3
+    - name: Render terraform docs and push changes back
+      uses: terraform-docs/gh-actions@main
+      with:
+        working-dir: ./eks-clusters
+        output-file: "README.md"
+        output-format: "markdown table"
+        output-method: "inject"
+        git-push: "true"
+  gke-terraform-docs:
+    name: Generate Terraform docs for GKE clusters
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, 'terraform-docs') }}
+    steps:
+    - name: Checkout latest commit
+      uses: actions/checkout@v3
+    - name: Render terraform docs and push changes back
+      uses: terraform-docs/gh-actions@main
+      with:
+        working-dir: ./gke-clusters
+        output-file: "README.md"
+        output-format: "markdown table"
+        output-method: "inject"
+        git-push: "true"
